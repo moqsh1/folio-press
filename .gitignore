@@ -1,0 +1,12 @@
+node_modules
+.vercel
+.grok
+artifacts
+screenshots
+.tanstack
+dist
+.env
+.env.*
+.project_id
+public/FolioPress.apk
+public/FolioPress.zip

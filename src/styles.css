@@ -1,0 +1,220 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Fraunces", ui-serif, Georgia, serif;
+  --color-bg: #e6dfd2;
+  --color-surface: #f4efe6;
+  --color-raised: #fffdf8;
+  --color-page: #fffdf8;
+  --color-caption: #f3eee4;
+  --color-well: #e5ddd0;
+  --color-ink: #1c1814;
+  --color-muted: #6e665c;
+  --color-line: #d9d0c3;
+  --color-accent: #a33b2b;
+  --color-accent-ink: #fff8f4;
+  --radius-sm: 0.375rem;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+}
+
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+  padding-inline: 0.9rem;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    scale 150ms ease;
+}
+
+.btn:active:not(:disabled) {
+  scale: 0.96;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.btn:disabled {
+  opacity: 0.45;
+}
+
+.btn-primary {
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--color-accent) 86%, black);
+}
+
+.btn-ink {
+  background: var(--color-ink);
+  color: var(--color-page);
+}
+
+.btn-quiet {
+  background: var(--color-caption);
+  color: var(--color-ink);
+}
+
+.btn-quiet:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--color-caption) 70%, var(--color-line));
+}
+
+.field {
+  width: 100%;
+  min-height: 2.75rem;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  background: var(--color-raised);
+  padding-inline: 0.75rem;
+  color: var(--color-ink);
+}
+
+.field:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+}
+
+.sheet-shadow {
+  box-shadow:
+    0 1px 0 rgb(28 24 20 / 0.05),
+    0 16px 40px rgb(28 24 20 / 0.14);
+}
+
+.reframe {
+  touch-action: none;
+  cursor: grab;
+}
+
+.reframe:active {
+  cursor: grabbing;
+}
+
+.caption-band {
+  container-type: size;
+}
+
+.caption-copy {
+  font-size: min(58cqh, 15px);
+  line-height: 1.15;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.thumb-cell {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 88px;
+}
+
+.scroll-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line) transparent;
+}
+
+.safe-bottom {
+  padding-bottom: max(0px, env(safe-area-inset-bottom));
+}
+
+.page-folio {
+  font-size: 12px;
+  line-height: 1;
+  padding-bottom: 4px;
+}
+
+.print-root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  overflow: hidden;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  body > :not(.print-root) {
+    display: none !important;
+  }
+  .print-root {
+    position: static;
+    z-index: auto;
+    display: block !important;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    opacity: 1;
+  }
+  html,
+  body {
+    height: auto !important;
+    overflow: visible !important;
+    background: white !important;
+  }
+  .print-page {
+    position: relative;
+    overflow: hidden;
+    break-after: page;
+    page-break-after: always;
+    background: var(--color-page);
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  .print-page:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+  .page-folio {
+    font-size: 10pt;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
